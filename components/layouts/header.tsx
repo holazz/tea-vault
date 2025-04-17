@@ -2,10 +2,9 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Github, Coins } from 'lucide-react'
+import { Github } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import WalletConnectButton from '@/features/auth/components/wallet-connect-button'
-import { ThemeToggle } from '@/components/theme/theme-toggle'
 
 export default function Header() {
   return (
@@ -21,7 +20,6 @@ export default function Header() {
               <Github size={24} />
             </Link>
           </Button>
-          {/* <ThemeToggle /> */}
           <WalletConnectButton />
         </nav>
       </div>
