@@ -22,19 +22,11 @@ export function WithdrawForm() {
     try {
       const withdrawFn = Number.parseFloat(withdrawableAmount) === Number.parseFloat(amount) ? withdrawAll : withdraw
       const hash = await withdrawFn(amount)
-      toast.success('Withdrawal successful', {
-        description: (
-          <a href={`${TEA_EXPLORER_URL}/tx/${hash}`} target="_blank" rel="noreferrer" className="underline">
-            View on Tea Explorer
-          </a>
-        ),
-      })
+      toast.success('Withdrawal successful')
       setAmount('')
     } catch (e: any) {
       console.error(e)
-      toast.error('Withdrawal failed', {
-        description: e?.shortMessage || e?.message || 'Please try again later',
-      })
+      toast.error('Withdrawal failed')
     }
   }
 

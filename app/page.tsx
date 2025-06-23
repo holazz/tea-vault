@@ -13,7 +13,13 @@ export default function Home() {
         </div>
         <WhitelistManager />
       </div>
-      <Toaster richColors />
+      <Toaster
+        position="top-center"
+        className="flex justify-center"
+        offset={{ top: '12px' }}
+        mobileOffset={{ top: '8px' }}
+        toastOptions={{ style: { width: 'fit-content', margin: '0 auto' } }}
+      />
     </div>
   )
 }

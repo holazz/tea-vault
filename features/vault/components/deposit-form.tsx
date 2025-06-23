@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
-import { toast } from 'sonner'
+import { toast } from '@/components/ui/toast'
 import { Skeleton } from '@/components/ui/skeleton'
 import { TEA_EXPLORER_URL } from '@/lib/chains'
 import { TokenInput } from './ui/token-input'
@@ -21,19 +21,11 @@ export function DepositForm() {
   const handleDeposit = async () => {
     try {
       const hash = await deposit(amount)
-      toast.success('Deposit successful', {
-        description: (
-          <a href={`${TEA_EXPLORER_URL}/tx/${hash}`} target="_blank" rel="noreferrer" className="underline">
-            View on Tea Explorer
-          </a>
-        ),
-      })
+      toast.success(`Deposit successful!`)
       setAmount('')
     } catch (e: any) {
       console.error(e)
-      toast.error('Deposit failed', {
-        description: e?.shortMessage || e?.message || 'Please try again later',
-      })
+      toast.error('Deposit failed!')
     }
   }
 

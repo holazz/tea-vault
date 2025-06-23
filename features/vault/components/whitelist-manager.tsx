@@ -5,7 +5,7 @@ import { isAddress, isAddressEqual } from 'viem'
 import { useAccount } from 'wagmi'
 import { clsx } from 'clsx'
 import { Plus, Trash2, Upload } from 'lucide-react'
-import { toast } from 'sonner'
+import { toast } from '@/components/ui/toast'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -42,45 +42,33 @@ export function WhitelistManager() {
 
   const handleAddAddress = async () => {
     if (!isAddress(newAddress)) {
-      toast.error('Invalid address', {
-        description: 'Please enter a valid EVM address',
-      })
+      toast.error('Invalid address')
       return
     }
 
     if (whitelist.includes(newAddress)) {
-      toast.error('Duplicate address', {
-        description: 'This address is already in your whitelist',
-      })
+      toast.error('Duplicate address')
       return
     }
 
     if (whitelist.length >= MAX_WHITELIST_ADDRESS_COUNT) {
-      toast.error('Whitelist limit reached', {
-        description: `You can only have a maximum of ${MAX_WHITELIST_ADDRESS_COUNT} addresses in your whitelist`,
-      })
+      toast.error('Whitelist limit reached')
       return
     }
 
     try {
       await updateWhitelist([newAddress], true)
-      toast.success('Address added', {
-        description: 'The address has been added to your whitelist',
-      })
+      toast.success('Address added successfully')
       setNewAddress('')
     } catch (e: any) {
       console.error(e)
-      toast.error('Failed to add address', {
-        description: e?.shortMessage || e?.message || 'Please try again later',
-      })
+      toast.error('Failed to add address')
     }
   }
 
   const handleBatchAdd = async () => {
     if (!batchAddresses.trim()) {
-      toast.error('No addresses provided', {
-        description: 'Please enter at least one address',
-      })
+      toast.error('No addresses provided')
       return
     }
 
@@ -94,9 +82,7 @@ export function WhitelistManager() {
     const validAddresses = addressArray.filter((addr) => isAddress(addr))
 
     if (validAddresses.length === 0) {
-      toast.error('No valid addresses found', {
-        description: 'Please enter valid EVM addresses (0x...)',
-      })
+      toast.error('No valid addresses found')
       return
     }
 
@@ -122,19 +108,13 @@ export function WhitelistManager() {
       // Format duplicates for display
       const formattedDuplicates = allDuplicates.map((addr) => formatAddress(addr)).join(', ')
 
-      toast.error('Duplicate addresses found', {
-        description: `The following addresses are duplicates: ${formattedDuplicates}`,
-      })
+      toast.error('Duplicate addresses found')
       return
     }
 
     // Check whitelist limit
     if (whitelist.length + validAddresses.length > MAX_WHITELIST_ADDRESS_COUNT) {
-      toast.error('Whitelist limit exceeded', {
-        description: `Adding ${validAddresses.length} addresses would exceed the maximum of ${
-          MAX_WHITELIST_ADDRESS_COUNT - whitelist.length
-        } remaining addresses`,
-      })
+      toast.error('Whitelist limit exceeded')
       return
     }
 
@@ -146,18 +126,14 @@ export function WhitelistManager() {
   const handleConfirmedBatchAdd = async () => {
     try {
       await updateWhitelist(validAddressesToAdd, true)
-      toast.success('Addresses added', {
-        description: `Successfully added ${validAddressesToAdd.length} addresses to your whitelist`,
-      })
+      toast.success('Addresses added successfully')
       setBatchAddresses('')
       setDialogOpen(false)
       setConfirmDialogOpen(false)
       setValidAddressesToAdd([])
     } catch (e: any) {
       console.error(e)
-      toast.error('Failed to add addresses', {
-        description: e?.shortMessage || e?.message || 'Please try again later',
-      })
+      toast.error('Failed to add addresses')
     }
   }
 
@@ -189,15 +165,11 @@ export function WhitelistManager() {
 
     try {
       await updateWhitelist(selectedAddresses, false)
-      toast.success('Addresses removed', {
-        description: 'The addresses have been removed from your whitelist',
-      })
+      toast.success('Addresses removed')
       setSelectedAddresses([])
     } catch (e: any) {
       console.error(e)
-      toast.error('Failed to remove addresses', {
-        description: e?.shortMessage || e?.message || 'Please try again later',
-      })
+      toast.error('Failed to remove addresses')
     }
   }
 
